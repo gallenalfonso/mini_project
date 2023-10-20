@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/screens/bottom_navigation.dart';
 import 'package:flutter_mini_project/screens/home_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -10,10 +12,11 @@ class MyApp extends StatelessWidget {
     MaterialApp(
       title: 'Money Tracker',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.amber,
         useMaterial3: true,
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
       ),
-      home: const HomePage(),
+      home: const MyBottomNavigation(),
     );
   }
 }
