@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
         useMaterial3: true,
-        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+         buttonTheme: ButtonThemeData(
+          buttonColor: Colors.amber, // Warna tombol aktif
+          disabledColor: Colors.grey, // Warna tombol saat dinonaktifkan
+          // Atur properti lain sesuai kebutuhan Anda
+        ),
       ),
       home: const MyBottomNavigation(),
     );
