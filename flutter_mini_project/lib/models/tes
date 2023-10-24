@@ -1,0 +1,21 @@
+Tabel :
+1. Category 
+  -id
+  -name
+  -type
+  -created_at
+  -updated_at
+  -deleted_at
+
+type :
+  1 = income
+  2= expense
+
+2. transactions
+  -id
+  -name
+  -category_id
+  -amount
+  -created_at
+  -updated_at
+  -deleted_at
