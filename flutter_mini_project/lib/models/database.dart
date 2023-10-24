@@ -12,7 +12,7 @@ part 'database.g.dart';
 
 // ... the TodoItems table definition stays the same
 
-@DriftDatabase(tables: [Categories, Transaction])
+@DriftDatabase(tables: [Categories, Transactions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

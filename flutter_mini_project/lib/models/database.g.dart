@@ -330,12 +330,12 @@ class CategoriesCompanion extends UpdateCompanion<Category> {
   }
 }
 
-class $TransactionTable extends Transaction
-    with TableInfo<$TransactionTable, TransactionData> {
+class $TransactionsTable extends Transactions
+    with TableInfo<$TransactionsTable, Transaction> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $TransactionTable(this.attachedDatabase, [this._alias]);
+  $TransactionsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -402,9 +402,9 @@ class $TransactionTable extends Transaction
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'transaction';
+  static const String $name = 'transactions';
   @override
-  VerificationContext validateIntegrity(Insertable<TransactionData> instance,
+  VerificationContext validateIntegrity(Insertable<Transaction> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -461,9 +461,9 @@ class $TransactionTable extends Transaction
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  TransactionData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Transaction map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return TransactionData(
+    return Transaction(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
@@ -484,12 +484,12 @@ class $TransactionTable extends Transaction
   }
 
   @override
-  $TransactionTable createAlias(String alias) {
-    return $TransactionTable(attachedDatabase, alias);
+  $TransactionsTable createAlias(String alias) {
+    return $TransactionsTable(attachedDatabase, alias);
   }
 }
 
-class TransactionData extends DataClass implements Insertable<TransactionData> {
+class Transaction extends DataClass implements Insertable<Transaction> {
   final int id;
   final String name;
   final int categoryId;
@@ -498,7 +498,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
-  const TransactionData(
+  const Transaction(
       {required this.id,
       required this.name,
       required this.categoryId,
@@ -523,8 +523,8 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
     return map;
   }
 
-  TransactionCompanion toCompanion(bool nullToAbsent) {
-    return TransactionCompanion(
+  TransactionsCompanion toCompanion(bool nullToAbsent) {
+    return TransactionsCompanion(
       id: Value(id),
       name: Value(name),
       categoryId: Value(categoryId),
@@ -538,10 +538,10 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
     );
   }
 
-  factory TransactionData.fromJson(Map<String, dynamic> json,
+  factory Transaction.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return TransactionData(
+    return Transaction(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
@@ -567,7 +567,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
     };
   }
 
-  TransactionData copyWith(
+  Transaction copyWith(
           {int? id,
           String? name,
           int? categoryId,
@@ -576,7 +576,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
           DateTime? createdAt,
           DateTime? updatedAt,
           Value<DateTime?> deletedAt = const Value.absent()}) =>
-      TransactionData(
+      Transaction(
         id: id ?? this.id,
         name: name ?? this.name,
         categoryId: categoryId ?? this.categoryId,
@@ -588,7 +588,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
       );
   @override
   String toString() {
-    return (StringBuffer('TransactionData(')
+    return (StringBuffer('Transaction(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('categoryId: $categoryId, ')
@@ -607,7 +607,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is TransactionData &&
+      (other is Transaction &&
           other.id == this.id &&
           other.name == this.name &&
           other.categoryId == this.categoryId &&
@@ -618,7 +618,7 @@ class TransactionData extends DataClass implements Insertable<TransactionData> {
           other.deletedAt == this.deletedAt);
 }
 
-class TransactionCompanion extends UpdateCompanion<TransactionData> {
+class TransactionsCompanion extends UpdateCompanion<Transaction> {
   final Value<int> id;
   final Value<String> name;
   final Value<int> categoryId;
@@ -627,7 +627,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<DateTime?> deletedAt;
-  const TransactionCompanion({
+  const TransactionsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.categoryId = const Value.absent(),
@@ -637,7 +637,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
     this.updatedAt = const Value.absent(),
     this.deletedAt = const Value.absent(),
   });
-  TransactionCompanion.insert({
+  TransactionsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required int categoryId,
@@ -652,7 +652,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
         amount = Value(amount),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
-  static Insertable<TransactionData> custom({
+  static Insertable<Transaction> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<int>? categoryId,
@@ -674,7 +674,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
     });
   }
 
-  TransactionCompanion copyWith(
+  TransactionsCompanion copyWith(
       {Value<int>? id,
       Value<String>? name,
       Value<int>? categoryId,
@@ -683,7 +683,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
       Value<DateTime>? createdAt,
       Value<DateTime>? updatedAt,
       Value<DateTime?>? deletedAt}) {
-    return TransactionCompanion(
+    return TransactionsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
@@ -727,7 +727,7 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
 
   @override
   String toString() {
-    return (StringBuffer('TransactionCompanion(')
+    return (StringBuffer('TransactionsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('categoryId: $categoryId, ')
@@ -744,10 +744,11 @@ class TransactionCompanion extends UpdateCompanion<TransactionData> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   late final $CategoriesTable categories = $CategoriesTable(this);
-  late final $TransactionTable transactions = $TransactionTable(this);
+  late final $TransactionsTable transactions = $TransactionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [categories, transactions];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [categories, transactions];
 }
