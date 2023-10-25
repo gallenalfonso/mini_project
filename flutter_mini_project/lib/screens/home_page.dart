@@ -1,5 +1,6 @@
 import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/screens/transaction_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,7 +24,16 @@ class _HomePageState extends State<HomePage> {
         lastDate: DateTime.now(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+            builder: (context) => TransactionScreen(),
+          ))
+              .then((value) {
+            setState(() {});
+          }); 
+        },
+        child: Icon(Icons.add_sharp),
       ),
       body: ListView(
         children: [
@@ -120,11 +130,14 @@ class _HomePageState extends State<HomePage> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.edit),
-                        SizedBox(
-                          width: 10,
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.edit),
                         ),
-                        Icon(Icons.delete),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete),
+                        ),
                       ],
                     ),
                   ),
@@ -143,11 +156,14 @@ class _HomePageState extends State<HomePage> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.edit),
-                        SizedBox(
-                          width: 10,
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.edit),
                         ),
-                        Icon(Icons.delete),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete),
+                        ),
                       ],
                     ),
                   ),
