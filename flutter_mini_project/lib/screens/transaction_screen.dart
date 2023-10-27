@@ -10,9 +10,10 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   bool isExpenseCategory = true;
-  List categoryList = ['Makan', 'Nonton', 'Pulsa'];
-  late String dropDownValue = categoryList.first;
+
   TextEditingController dateController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +52,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
               ),
 
               //TEXTFORMFIELD INPUT AMOUNT
-
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
+                  controller: amountController,
                   decoration: InputDecoration(
                     hintText: 'Input Nominal',
                   ),
@@ -69,25 +70,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Category',
+                  'Description',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5),
                 ),
               ),
 
-              //DROPDOWN BUTTON CATEGORY
+              //DESCRIPTION
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DropdownButton<String>(
-                  value: dropDownValue,
-                  isExpanded: true,
-                  icon: Icon(Icons.arrow_downward),
-                  items: categoryList.map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {},
+                child: TextFormField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    hintText: 'Input Description',
+                  ),
+                  keyboardType: TextInputType.number,
                 ),
               ),
             ],
