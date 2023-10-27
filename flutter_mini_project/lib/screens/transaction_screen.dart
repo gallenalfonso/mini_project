@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/models/boxes.dart';
+import 'package:flutter_mini_project/models/transactions.dart';
 import 'package:intl/intl.dart';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({super.key});
+  // final bool isEditing;
+  // final Transactions transaction;
+  // final Function(Transactions) onTransactionEdited;
+  // final Function(Transactions) onTransactionAdded;
+
+  // TransactionScreen({
+  //   required this.isEditing,
+  //   required this.transaction,
+  //   required this.onTransactionEdited,
+  //   required this.onTransactionAdded,
+  // });
 
   @override
   State<TransactionScreen> createState() => _TransactionScreenState();
@@ -10,12 +22,38 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen> {
   bool isExpenseCategory = true;
-  List categoryList = ['Makan', 'Nonton', 'Pulsa'];
-  late String dropDownValue = categoryList.first;
+
   TextEditingController dateController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   if (widget.isEditing) {
+  //     // Populate input fields with the existing transaction data
+      
+  //     amountController.text = widget.transaction.amount.toString();
+  //     descriptionController.text = widget.transaction.description;
+  //     dateController.text =
+  //         DateFormat('yyyy-MM-dd').format(widget.transaction.dateTime);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    void addTransaction(
+        int amount, String description, DateTime dateTime, bool expenseIncome) {
+      final transaction = Transactions(
+          amount: int.parse(amountController.text),
+          description: descriptionController.text,
+          dateTime: DateTime.parse(dateController.text),
+          expenseIncome: isExpenseCategory);
+
+      boxTransactions.add(transaction);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Transaction'),
@@ -50,11 +88,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 ),
               ),
 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  'Amount',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5),
+                ),
+              ),
+
               //TEXTFORMFIELD INPUT AMOUNT
 
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: TextFormField(
+                  controller: amountController,
                   decoration: InputDecoration(
                     hintText: 'Input Nominal',
                   ),
@@ -69,25 +116,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Category',
+                  'Description',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.5),
                 ),
               ),
 
-              //DROPDOWN BUTTON CATEGORY
+              //DESCRIPTION
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: DropdownButton<String>(
-                  value: dropDownValue,
-                  isExpanded: true,
-                  icon: Icon(Icons.arrow_downward),
-                  items: categoryList.map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {},
+                child: TextFormField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    hintText: 'Input Description',
+                  ),
+                  keyboardType: TextInputType.number,
                 ),
               ),
             ],
@@ -114,7 +156,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
                   if (selectDate != null) {
                     String formatDate =
-                        DateFormat('dd-MM-yyyy').format(selectDate);
+                        DateFormat('yyyy-MM-dd').format(selectDate);
 
                     dateController.text = formatDate;
                   }
@@ -128,7 +170,34 @@ class _TransactionScreenState extends State<TransactionScreen> {
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                addTransaction(
+                    int.parse(amountController.text),
+                    descriptionController.text,
+                    DateTime.parse(dateController.text),
+                    isExpenseCategory);
+                Navigator.pop(context);
+
+                // int newAmount = int.parse(amountController.text);
+                // String newDescription = descriptionController.text;
+                // DateTime newDateTime = DateTime.parse(dateController.text);
+                // bool newExpenseIncome = widget.transaction.expenseIncome;
+
+                // Transactions newTransaction = Transactions(
+                //   amount: newAmount,
+                //   description: newDescription,
+                //   dateTime: newDateTime,
+                //   expenseIncome: newExpenseIncome,
+                // );
+
+                // if (widget.isEditing) {
+                //   // Pass the updated transaction back to the HomePage for editing in the Hive box
+                //   widget.onTransactionEdited(newTransaction);
+                // } else {
+                //   // Pass the new transaction back to the HomePage for adding it to the Hive box
+                //   widget.onTransactionAdded(newTransaction);
+                // }
+              },
               child: Text('SAVE'),
             ),
           ),
