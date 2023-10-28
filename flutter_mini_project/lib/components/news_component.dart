@@ -1,9 +1,9 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
-class newsComponent extends StatelessWidget {
+class NewsComponent extends StatelessWidget {
   final String? newsTitle , newsimage;
-  const newsComponent({super.key, this.newsTitle , this.newsimage});
+  const NewsComponent({super.key, this.newsTitle , this.newsimage});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class newsComponent extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: 150,
             child: AspectRatio(
               aspectRatio: 4 / 3,
