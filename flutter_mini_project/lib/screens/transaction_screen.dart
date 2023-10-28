@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/models/boxes.dart';
+import 'package:flutter_mini_project/models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionScreen extends StatefulWidget {
@@ -17,6 +19,19 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void addTransaction(double amount, String description, DateTime dateTime,
+        bool isExpenseCategory) {
+      final transaction = Transaction(
+          amount: amount,
+          description: description,
+          dateTime: dateTime,
+          expenseIncome: isExpenseCategory);
+
+      final box = Boxes.getTransaction();
+
+      box.add(transaction);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Transaction'),
@@ -110,7 +125,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
                   if (selectDate != null) {
                     String formatDate =
-                        DateFormat('dd-MM-yyyy').format(selectDate);
+                        DateFormat('yyyy-MM-dd').format(selectDate);
 
                     dateController.text = formatDate;
                   }
@@ -124,7 +139,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                addTransaction(
+                    double.parse(amountController.text),
+                    descriptionController.text,
+                    DateTime.parse(dateController.text),
+                    isExpenseCategory);
+
+                Navigator.pop(context);
+              },
               child: Text('SAVE'),
             ),
           ),

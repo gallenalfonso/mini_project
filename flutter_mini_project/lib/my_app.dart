@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
 import 'package:flutter_mini_project/providers/news_provider.dart';
 import 'package:flutter_mini_project/screens/bottom_navigation.dart';
 import 'package:flutter_mini_project/screens/home_page.dart';
@@ -14,6 +15,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BottomNavigationProvider(),
         ),
       ],
       child: MaterialApp(

@@ -24,7 +24,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Consumer<NewsProvider>(builder: (BuildContext context, news, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Berita'),
+          title: Text('News'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
