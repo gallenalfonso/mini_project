@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
+import 'package:flutter_mini_project/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/providers/news_provider.dart';
 import 'package:flutter_mini_project/providers/transaction_screen_provider.dart';
 import 'package:flutter_mini_project/screens/bottom_navigation.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => TransactionScreenProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomepageProvider(),
         ),
       ],
       child: MaterialApp(

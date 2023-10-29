@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mini_project/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/providers/transaction_screen_provider.dart';
+import 'package:flutter_mini_project/screens/home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +17,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   Widget build(BuildContext context) {
     final transactionProvider =
         Provider.of<TransactionScreenProvider>(context, listen: false);
+    final homeProvider = Provider.of<HomepageProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -141,6 +144,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 onPressed: () {
                   transactionProvider.saveTransactionButton();
                   Navigator.pop(context);
+                  homeProvider.updateTotals();
+                  homeProvider.updateFilteredTransactions();
                 },
                 child: const Text('SAVE'),
               ),

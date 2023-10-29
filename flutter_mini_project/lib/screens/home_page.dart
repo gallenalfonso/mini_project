@@ -2,9 +2,11 @@ import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/models/boxes.dart';
 import 'package:flutter_mini_project/models/transaction.dart';
+import 'package:flutter_mini_project/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/screens/transaction_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,15 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DateTime selectedDate = DateTime.now();
-  double totalIncome = 0;
-  double totalExpense = 0;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    updateTotals();
+    Provider.of<HomepageProvider>(context, listen: false)
+        .updateFilteredTransactions();
   }
 
   // @override
@@ -31,53 +30,20 @@ class _HomePageState extends State<HomePage> {
   //   super.dispose();
   // }
 
-  void editTransaction(Transaction transaction, double amount,
-      String description, DateTime dateTime, bool isExpenseCategory) {
-    transaction.amount = amount;
-    transaction.description = description;
-    transaction.dateTime = dateTime;
-    transaction.expenseIncome = isExpenseCategory;
+  // void editTransaction(Transaction transaction, double amount,
+  //     String description, DateTime dateTime, bool isExpenseCategory) {
+  //   transaction.amount = amount;
+  //   transaction.description = description;
+  //   transaction.dateTime = dateTime;
+  //   transaction.expenseIncome = isExpenseCategory;
 
-    transaction.save();
-  }
-
-  void deleteTransaction(Transaction transaction) {
-    transaction.delete();
-  }
-
-
-  //TOTALIN 
-  void updateTotals() {
-    final transactions = Boxes.getTransaction()
-        .values
-        .where((transaction) =>
-            transaction.dateTime.year == selectedDate.year &&
-            transaction.dateTime.month == selectedDate.month &&
-            transaction.dateTime.day == selectedDate.day)
-        .toList();
-
-    double income = 0;
-    double expense = 0;
-
-    for (var transaction in transactions) {
-      if (transaction.expenseIncome) {
-        expense += transaction.amount;
-      } else {
-        income += transaction.amount;
-      }
-    }
-
-    setState(() {
-      totalIncome = income;
-      totalExpense = expense;
-    });
-  }
-
-
-
+  //   transaction.save();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = Provider.of<HomepageProvider>(context, listen: false);
+
     return Scaffold(
       appBar: CalendarAppBar(
         white: Colors.black,
@@ -86,23 +52,18 @@ class _HomePageState extends State<HomePage> {
         backButton: false,
         // onDateChanged: (value) => print(value),
         onDateChanged: (value) {
-          setState(() {
-            selectedDate = value;
-          });
-          updateTotals();
+          homeProvider.selectDateLogic(value);
+          homeProvider.updateTotals();
+          debugPrint(value.toString());
         },
         firstDate: DateTime.now().subtract(const Duration(days: 140)),
         lastDate: DateTime.now(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TransactionScreen(),
-          ))
-              .then((value) {
-            setState(() {});
-          });
+          ));
         },
         child: Icon(Icons.add_sharp),
       ),
@@ -118,11 +79,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildContent(List<Transaction> transactions) {
+    final buildProvider = Provider.of<HomepageProvider>(context, listen: false);
     List<Transaction> filteredTransactions = transactions
         .where((transaction) =>
-            transaction.dateTime.year == selectedDate.year &&
-            transaction.dateTime.month == selectedDate.month &&
-            transaction.dateTime.day == selectedDate.day)
+            transaction.dateTime.year == buildProvider.selectedDate.year &&
+            transaction.dateTime.month == buildProvider.selectedDate.month &&
+            transaction.dateTime.day == buildProvider.selectedDate.day)
         .toList();
 
     // if (transactions.isEmpty)
@@ -134,132 +96,142 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     } else {
-      return Column(
-        children: [
-          //TEXT OVERVIEW
-          Center(
-            child: Text(
-              'Overview',
-              style: TextStyle(fontSize: 22),
+      return Consumer<HomepageProvider>(builder: (context, homeProvider, _) {
+        return Column(
+          children: [
+            //TEXT OVERVIEW
+            Center(
+              child: Text(
+                'Overview',
+                style: TextStyle(fontSize: 22),
+              ),
             ),
-          ),
 
-          ///OVERVIEW INCOME EXPENSE REKAP
-           Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_downward_sharp,
-                          color: Colors.green,
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          'Income',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                    Text(
-                      totalIncome.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_upward_sharp,
-                          color: Colors.red,
-                        ),
-                        SizedBox(
-                          width: 6,
-                        ),
-                        Text(
-                          'Expense',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      totalExpense.toStringAsFixed(2),
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ],
+            ///OVERVIEW INCOME EXPENSE REKAP
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.arrow_downward_sharp,
+                            color: Colors.green,
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            'Income',
+                            style: TextStyle(fontSize: 16),
+                          )
+                        ],
+                      ),
+                      Text(
+                        homeProvider.totalIncome.toStringAsFixed(2),
+                        style: TextStyle(
+                            fontSize: 19, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.arrow_upward_sharp,
+                            color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 6,
+                          ),
+                          Text(
+                            'Expense',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        homeProvider.totalExpense.toStringAsFixed(2),
+                        style: TextStyle(
+                            fontSize: 19, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          //TRANSACTION TEXT
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0, left: 16),
-            child: Text(
-              'Transactions',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            //TRANSACTION TEXT
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0, left: 16),
+              child: Text(
+                'Transactions',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
 
-          Expanded(
-              child: ListView.builder(
-            // itemCount: transactions.length,
-            itemCount: filteredTransactions.length,
-            itemBuilder: (context, index) {
-              // final transaction = transactions[index];
-              final transaction = filteredTransactions[index];
+            Consumer<HomepageProvider>(
+                builder: (context, expandedTransactions, _) {
+              return Expanded(
+                  child: ListView.builder(
+                // itemCount: transactions.length,
+                itemCount: expandedTransactions.filteredTransactions.length,
+                itemBuilder: (context, index) {
+                  // final transaction = transactions[index];
+                  final transaction =
+                      expandedTransactions.filteredTransactions[index];
 
-              return buildTransaction(context, transaction);
-            },
-          ))
-        ],
-      );
+                  return buildTransaction(context, transaction);
+                },
+              ));
+            })
+          ],
+        );
+      });
     }
   }
 
   Widget buildTransaction(BuildContext context, Transaction transaction) {
-    return
-        // LIST TILE TRANSACTIONS
-        Card(
-      // color: Colors.white,
-      child: ListTile(
-        leading: transaction.expenseIncome
-            ? Icon(
-                Icons.arrow_upward_sharp,
-                color: Colors.red,
-              )
-            : Icon(
-                Icons.arrow_downward_sharp,
-                color: Colors.green,
+    final homeProvider = Provider.of<HomepageProvider>(context, listen: false);
+    // LIST TILE TRANSACTIONS
+
+    if (homeProvider.filteredTransactions.contains(transaction)) {
+      return Card(
+        // color: Colors.white,
+        child: ListTile(
+          leading: transaction.expenseIncome
+              ? Icon(
+                  Icons.arrow_upward_sharp,
+                  color: Colors.red,
+                )
+              : Icon(
+                  Icons.arrow_downward_sharp,
+                  color: Colors.green,
+                ),
+          title: Text(transaction.amount.toInt().toString()),
+          subtitle: Text(transaction.description),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.edit),
               ),
-        title: Text(transaction.amount.toInt().toString()),
-        subtitle: Text(transaction.description),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.edit),
-            ),
-            IconButton(
-              onPressed: () {
-                deleteTransaction(transaction);
-              },
-              icon: Icon(Icons.delete),
-            ),
-          ],
+              IconButton(
+                onPressed: () {
+                  homeProvider.deleteTransaction(transaction);
+                },
+                icon: Icon(Icons.delete),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+    return Text('NO TRANSACTION TODAY');
   }
 }
