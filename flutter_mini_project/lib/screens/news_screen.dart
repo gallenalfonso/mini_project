@@ -16,7 +16,7 @@ class _NewsScreenState extends State<NewsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<NewsProvider>(context, listen: false).getTopNews();
+    Provider.of<NewsProvider>(context, listen: false).getNewsNow();
   }
 
   @override
