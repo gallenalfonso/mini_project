@@ -1,6 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_project/components/newsComponent.dart';
+import 'package:flutter_mini_project/components/news_component.dart';
 import 'package:flutter_mini_project/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +16,7 @@ class _NewsScreenState extends State<NewsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<NewsProvider>(context, listen: false).getTopNews();
+    Provider.of<NewsProvider>(context, listen: false).getNewsNow();
   }
 
   @override
@@ -24,20 +24,20 @@ class _NewsScreenState extends State<NewsScreen> {
     return Consumer<NewsProvider>(builder: (BuildContext context, news, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Berita'),
+          title: Text('News'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: ListView(
             children: [
               news.isLoading
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(),
                     )
                   : Column(
                       children: [
                         ...news.resNews!.articles!.map(
-                          (e) => newsComponent(
+                          (e) => NewsComponent(
                             newsTitle: e.title ?? " ",
                             newsimage: e.urlToImage ?? " ",
                           ),
