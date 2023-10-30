@@ -18,13 +18,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
     final transactionProvider =
         Provider.of<TransactionScreenProvider>(context, listen: false);
     final homeProvider = Provider.of<HomepageProvider>(context, listen: false);
+    final GlobalKey<FormState> formKeyProvider =
+        Provider.of<TransactionScreenProvider>(context).formkey;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Transaction'),
       ),
       body: Form(
-        key: transactionProvider.formkey,
+        key: formKeyProvider,
         child: ListView(
           children: [
             Column(
@@ -138,18 +140,21 @@ class _TransactionScreenState extends State<TransactionScreen> {
               height: 250,
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  transactionProvider.saveTransactionButton();
-                  Navigator.pop(context);
-                  homeProvider.updateTotals();
-                  homeProvider.updateFilteredTransactions();
-                },
-                child: const Text('SAVE'),
-              ),
-            ),
+            Consumer<TransactionScreenProvider>(
+                builder: (context, submitButton, _) {
+              return Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    submitButton.saveTransactionButton();
+                    Navigator.pop(context);
+                    homeProvider.updateTotals();
+                    homeProvider.updateFilteredTransactions();
+                  },
+                  child: const Text('SAVE'),
+                ),
+              );
+            }),
           ],
         ),
       ),

@@ -26,7 +26,7 @@ class NewsComponent extends StatelessWidget {
           Expanded(
             child: Text(
               newsTitle ?? '',
-              maxLines: 2,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_mini_project/models/boxes.dart';
 import 'package:flutter_mini_project/models/transaction.dart';
 import 'package:flutter_mini_project/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/screens/transaction_screen.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       appBar: CalendarAppBar(
         white: Colors.black,
         black: Colors.white,
-        accent: Colors.amber,
+        accent: Colors.teal[300],
         backButton: false,
         // onDateChanged: (value) => print(value),
         onDateChanged: (value) {
@@ -58,14 +59,6 @@ class _HomePageState extends State<HomePage> {
         },
         firstDate: DateTime.now().subtract(const Duration(days: 140)),
         lastDate: DateTime.now(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TransactionScreen(),
-          ));
-        },
-        child: Icon(Icons.add_sharp),
       ),
       body: ValueListenableBuilder<Box<Transaction>>(
         valueListenable: Boxes.getTransaction().listenable(),
@@ -200,34 +193,37 @@ class _HomePageState extends State<HomePage> {
     // LIST TILE TRANSACTIONS
 
     if (homeProvider.filteredTransactions.contains(transaction)) {
-      return Card(
-        // color: Colors.white,
-        child: ListTile(
-          leading: transaction.expenseIncome
-              ? Icon(
-                  Icons.arrow_upward_sharp,
-                  color: Colors.red,
-                )
-              : Icon(
-                  Icons.arrow_downward_sharp,
-                  color: Colors.green,
-                ),
-          title: Text(transaction.amount.toInt().toString()),
-          subtitle: Text(transaction.description),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edit),
-              ),
-              IconButton(
-                onPressed: () {
-                  homeProvider.deleteTransaction(transaction);
-                },
-                icon: Icon(Icons.delete),
-              ),
-            ],
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal :8.0),
+        child: Slidable(
+          endActionPane: ActionPane(motion: StretchMotion(), children: [
+            SlidableAction(
+              onPressed: (context) {
+                homeProvider.deleteTransaction(transaction);
+              },
+              icon: Icons.delete,
+              backgroundColor: Colors.red,
+            )
+          ]),
+          child: Card(
+            color: Colors.white,
+            shadowColor: Colors.white,
+            elevation: 0.9,
+            child: ListTile(
+              leading: transaction.expenseIncome
+                  ? Icon(
+                      Icons.arrow_upward_sharp,
+                      color: Colors.red,
+                    )
+                  : Icon(
+                      Icons.arrow_downward_sharp,
+                      color: Colors.green,
+                    ),
+              title: Text(transaction.amount.toInt().toString()),
+              subtitle: Text(transaction.description, style: TextStyle()),
+           
+            
+            ),
           ),
         ),
       );

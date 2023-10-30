@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
+import 'package:flutter_mini_project/screens/transaction_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -22,12 +23,26 @@ class _BottomNavigationState extends State<MyBottomNavigation> {
           builder: (context, bottomProvider, _) {
         return bottomProvider.pages[bottomProvider.currentPageIndex];
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TransactionScreen(),
+          ));
+        },
+        child: Icon(Icons.add_sharp),
+        shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(30),
+        ),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       bottomNavigationBar: GNav(
-        gap: 8,
-        backgroundColor: Colors.amber,
-        // color: Colors.white,
-        // activeColor: Colors.white,
-        // tabBackgroundColor: Colors.black,
+        gap: 5,
+        backgroundColor: Colors.white,
+        color: Colors.black,
+        activeColor: Colors.black,
+        tabBackgroundColor: Colors.white,
         onTabChange: (value) {
           bottomNavigationProvider.changePages(value);
         },
@@ -41,8 +56,12 @@ class _BottomNavigationState extends State<MyBottomNavigation> {
             text: 'News',
           ),
           GButton(
-            icon: Icons.bookmark,
-            text: 'Category',
+            icon: Icons.auto_awesome,
+            text: 'Planner',
+          ),
+          GButton(
+            icon: Icons.data_thresholding,
+            text: 'Charts',
           ),
         ],
       ),

@@ -7,7 +7,7 @@ class TransactionScreenProvider extends ChangeNotifier {
   TextEditingController amountController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formkey = GlobalKey();
 
   bool isExpenseCategory = true;
 
@@ -17,25 +17,26 @@ class TransactionScreenProvider extends ChangeNotifier {
   }
 
   String? validatorAmount(value) {
-    if (value == null || value.isEmpty) {
+    if (value.isEmpty) {
       return 'Please Enter Amount';
-    }
-    notifyListeners();
+    }notifyListeners();
     return null;
   }
 
   String? validatorDescription(value) {
-    if (value == null || value.isEmpty) {
+    if (value.isEmpty) {
       return 'Please Enter Description';
     }
     notifyListeners();
+
     return null;
   }
 
   String? validatorDatePicker(value) {
-    if (value == null || value.isEmpty) {
+    if (value.isEmpty) {
       return 'Please Select Date';
     }
+    notifyListeners();
     return null;
   }
 
@@ -64,5 +65,6 @@ class TransactionScreenProvider extends ChangeNotifier {
       descriptionController.clear();
       dateController.clear();
     }
+    notifyListeners();
   }
 }

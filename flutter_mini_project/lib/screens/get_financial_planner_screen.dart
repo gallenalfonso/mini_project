@@ -22,7 +22,6 @@ class _GetFinancialPlannerScreenState extends State<GetFinancialPlannerScreen> {
       appBar: AppBar(
         title: const Text("Your Financial Planner"),
         centerTitle: true,
-        backgroundColor: Colors.amber,
       ),
       body: Form(
         key: formkey,
