@@ -31,20 +31,25 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => GetFinancialPlannerProvider(),
         ),
-
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Money Tracker',
         theme: ThemeData(
-          primarySwatch: Colors.amber,
+          primarySwatch: Colors.teal,
+          appBarTheme: AppBarTheme(color: Colors.teal[300]),
           useMaterial3: true,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           buttonTheme: ButtonThemeData(
             buttonColor: Colors.amber, // Warna tombol aktif
             disabledColor: Colors.grey, // Warna tombol saat dinonaktifkan
             // Atur properti lain sesuai kebutuhan Anda
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor:
+                Colors.amber[100], // Background color of the floating action button
+            foregroundColor:
+                Colors.black, // Text/icon color of the floating action button
           ),
         ),
         home: const MyBottomNavigation(),
