@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
+import 'package:flutter_mini_project/providers/get_financial_planner_provider.dart';
 import 'package:flutter_mini_project/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/providers/news_provider.dart';
 import 'package:flutter_mini_project/providers/transaction_screen_provider.dart';
@@ -27,6 +28,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => HomepageProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => GetFinancialPlannerProvider(),
+        ),
+
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
