@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_project/providers/homepage_provider.dart';
-import 'package:flutter_mini_project/providers/transaction_screen_provider.dart';
-import 'package:flutter_mini_project/screens/home_page.dart';
+import 'package:flutter_mini_project/viewmodel/providers/homepage_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/transaction_screen_provider.dart';
+import 'package:flutter_mini_project/view/screens/home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

@@ -2,10 +2,10 @@ import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/models/boxes.dart';
 import 'package:flutter_mini_project/models/transaction.dart';
-import 'package:flutter_mini_project/providers/homepage_provider.dart';
-import 'package:flutter_mini_project/screens/transaction_screen.dart';
+import 'package:flutter_mini_project/viewmodel/providers/homepage_provider.dart';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    // TODO: implement initState
+  
     super.initState();
     Provider.of<HomepageProvider>(context, listen: false)
         .updateFilteredTransactions();
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
         return Column(
           children: [
             //TEXT OVERVIEW
-            Center(
+            const Center(
               child: Text(
                 'Overview',
                 style: TextStyle(fontSize: 22),
@@ -102,13 +102,13 @@ class _HomePageState extends State<HomePage> {
 
             ///OVERVIEW INCOME EXPENSE REKAP
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
+              padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           Icon(
                             Icons.arrow_downward_sharp,
@@ -125,14 +125,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text(
                         homeProvider.totalIncome.toStringAsFixed(2),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           Icon(
                             Icons.arrow_upward_sharp,
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text(
                         homeProvider.totalExpense.toStringAsFixed(2),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -159,8 +159,8 @@ class _HomePageState extends State<HomePage> {
             ),
 
             //TRANSACTION TEXT
-            Padding(
-              padding: const EdgeInsets.only(top: 16.0, left: 16),
+            const Padding(
+              padding: EdgeInsets.only(top: 16.0, left: 16),
               child: Text(
                 'Transactions',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal :8.0),
         child: Slidable(
-          endActionPane: ActionPane(motion: StretchMotion(), children: [
+          endActionPane: ActionPane(motion: const StretchMotion(), children: [
             SlidableAction(
               onPressed: (context) {
                 homeProvider.deleteTransaction(transaction);
@@ -211,16 +211,16 @@ class _HomePageState extends State<HomePage> {
             elevation: 0.9,
             child: ListTile(
               leading: transaction.expenseIncome
-                  ? Icon(
+                  ? const Icon(
                       Icons.arrow_upward_sharp,
                       color: Colors.red,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.arrow_downward_sharp,
                       color: Colors.green,
                     ),
               title: Text(transaction.amount.toInt().toString()),
-              subtitle: Text(transaction.description, style: TextStyle()),
+              subtitle: Text(transaction.description, style: const TextStyle()),
            
             
             ),
@@ -228,6 +228,6 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
-    return Text('NO TRANSACTION TODAY');
+    return const Text('NO TRANSACTION TODAY');
   }
 }

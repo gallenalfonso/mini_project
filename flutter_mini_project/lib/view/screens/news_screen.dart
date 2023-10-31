@@ -1,7 +1,6 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/components/news_component.dart';
-import 'package:flutter_mini_project/providers/news_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/news_provider.dart';
 import 'package:provider/provider.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -14,7 +13,6 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<NewsProvider>(context, listen: false).getNewsNow();
   }
@@ -24,7 +22,7 @@ class _NewsScreenState extends State<NewsScreen> {
     return Consumer<NewsProvider>(builder: (BuildContext context, news, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('News'),
+          title: const Text('News'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(12.0),

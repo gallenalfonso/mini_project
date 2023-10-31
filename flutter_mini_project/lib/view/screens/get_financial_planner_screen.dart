@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_project/providers/get_financial_planner_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/get_financial_planner_provider.dart';
 
 import 'package:provider/provider.dart';
 

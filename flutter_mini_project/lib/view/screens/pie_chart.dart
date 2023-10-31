@@ -16,7 +16,7 @@ class _ShowChartsState extends State<ShowCharts> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('Overview'),
+        title: const Text('Overview'),
       ),
       body: ValueListenableBuilder(
         valueListenable: Boxes.getTransaction().listenable(),
@@ -44,7 +44,7 @@ class _ShowChartsState extends State<ShowCharts> {
 
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
-                child: Container(
+                child: SizedBox(
                   height: 200,
                   child: (PieChart(
                     // swapAnimationCurve: Curves.bounceIn,
@@ -73,7 +73,7 @@ class _ShowChartsState extends State<ShowCharts> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
 
@@ -86,10 +86,10 @@ class _ShowChartsState extends State<ShowCharts> {
                 width: 300,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       'OVERALL',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
@@ -98,16 +98,16 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.all(30.0),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Rp.  ',
                             style: TextStyle(fontSize: 17),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 45,
                           ),
                           Text(
                             '${totalAmount.toInt()}',
-                            style: TextStyle(fontSize: 26),
+                            style: const TextStyle(fontSize: 26),
                           )
                         ],
                       ),
@@ -116,7 +116,7 @@ class _ShowChartsState extends State<ShowCharts> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
 
@@ -134,7 +134,7 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -155,7 +155,7 @@ class _ShowChartsState extends State<ShowCharts> {
                           ),
                           Text(
                             'Rp ${totalIncome.toInt()}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -172,7 +172,7 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -193,7 +193,7 @@ class _ShowChartsState extends State<ShowCharts> {
                           ),
                           Text(
                             'Rp ${totalExpense.toInt()}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
                         ],

@@ -29,7 +29,7 @@ class NewsProvider with ChangeNotifier {
   Future getNewsNow() async {
     try {
       final res = await service.getApi(
-          '${url}top-headlines?country=us&category=business&apiKey=${apiKey}');
+          '${url}top-headlines?country=us&category=business&apiKey=$apiKey');
 
       if (res.statusCode == 200) {
         resNews = TopNewsModel.fromJson(res.data);
