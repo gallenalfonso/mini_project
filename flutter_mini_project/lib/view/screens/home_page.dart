@@ -7,6 +7,7 @@ import 'package:flutter_mini_project/viewmodel/providers/homepage_provider.dart'
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,10 +20,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-  
     super.initState();
     Provider.of<HomepageProvider>(context, listen: false)
         .updateFilteredTransactions();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomepageProvider>(context, listen: false)
+          .selectDateLogic(DateTime.now());
+      Provider.of<HomepageProvider>(context, listen: false).updateTotals();
+    });
   }
 
   // @override
@@ -124,7 +130,11 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       Text(
-                        homeProvider.totalIncome.toStringAsFixed(2),
+                        NumberFormat.currency(
+                                locale: 'id', symbol: 'Rp ', decimalDigits: 0)
+                            .format(
+                          homeProvider.totalIncome,
+                        ),
                         style: const TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       )
@@ -148,7 +158,9 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       Text(
-                        homeProvider.totalExpense.toStringAsFixed(2),
+                        NumberFormat.currency(
+                                locale: 'id', symbol: 'Rp ', decimalDigits: 0)
+                            .format(homeProvider.totalExpense),
                         style: const TextStyle(
                             fontSize: 19, fontWeight: FontWeight.bold),
                       ),
@@ -194,7 +206,7 @@ class _HomePageState extends State<HomePage> {
 
     if (homeProvider.filteredTransactions.contains(transaction)) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal :8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Slidable(
           endActionPane: ActionPane(motion: const StretchMotion(), children: [
             SlidableAction(
@@ -219,10 +231,14 @@ class _HomePageState extends State<HomePage> {
                       Icons.arrow_downward_sharp,
                       color: Colors.green,
                     ),
-              title: Text(transaction.amount.toInt().toString()),
+              title: Text(
+                NumberFormat.currency(
+                  locale: 'id',
+                  symbol: 'Rp ',
+                  decimalDigits: 0,
+                ).format(transaction.amount),
+              ),
               subtitle: Text(transaction.description, style: const TextStyle()),
-           
-            
             ),
           ),
         ),

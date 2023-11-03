@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/models/boxes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 class ShowCharts extends StatefulWidget {
   const ShowCharts({super.key});
@@ -13,7 +14,6 @@ class ShowCharts extends StatefulWidget {
 class _ShowChartsState extends State<ShowCharts> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Overview'),
@@ -106,7 +106,9 @@ class _ShowChartsState extends State<ShowCharts> {
                             width: 45,
                           ),
                           Text(
-                            '${totalAmount.toInt()}',
+                            NumberFormat.currency(
+                                    locale: 'id', symbol: ' ', decimalDigits: 0)
+                                .format(totalAmount.toInt()),
                             style: const TextStyle(fontSize: 26),
                           )
                         ],
@@ -154,7 +156,11 @@ class _ShowChartsState extends State<ShowCharts> {
                             ],
                           ),
                           Text(
-                            'Rp ${totalIncome.toInt()}',
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: 'Rp ',
+                                    decimalDigits: 0)
+                                .format(totalIncome),
                             style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
@@ -192,7 +198,11 @@ class _ShowChartsState extends State<ShowCharts> {
                             ],
                           ),
                           Text(
-                            'Rp ${totalExpense.toInt()}',
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: 'Rp ',
+                                    decimalDigits: 0)
+                                .format(totalExpense),
                             style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
