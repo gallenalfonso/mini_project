@@ -43,25 +43,33 @@ class _GetFinancialPlannerScreenState extends State<GetFinancialPlannerScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: financialProvider.isLoading != false
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : ElevatedButton(
-                        onPressed: () {
-                          financialProvider.getrecommendation();
-                        },
-                        child: const Text('Show Recommendation'),
-                      ),
+                child: Consumer<GetFinancialPlannerProvider>(
+                    builder: (context, buttonConsumer, _) {
+                  return buttonConsumer.isLoading != false
+                      ? const Center(
+                          child: CircularProgressIndicator(), //TRUE
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            buttonConsumer.getrecommendation();
+                          },
+                          child: const Text('Show Recommendation'), //FALSE
+                        );
+                }),
               ),
               Consumer<GetFinancialPlannerProvider>(
                 builder: (context, provider, _) {
-                  if (provider.gptResponseData != null) {
-                    return Text(
-                        provider.gptResponseData?.choices[0].text ?? " ",
-                        textAlign: TextAlign.justify);
+                  if (provider.isLoading != true) {
+                    if (provider.gptResponseData != null) {
+                      return Text(
+                          provider.gptResponseData?.choices[0].text ??
+                              " ", //NOT NULL
+                          textAlign: TextAlign.justify);
+                    } else {
+                      return const Icon(Icons.dangerous);
+                    }
                   } else {
-                    return const Icon(Icons.dangerous);
+                    return const CircularProgressIndicator();
                   }
                 },
               )

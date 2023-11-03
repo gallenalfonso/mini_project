@@ -11,6 +11,7 @@ class GetFinancialPlannerProvider extends ChangeNotifier {
 
   void getrecommendation() async {
     isLoading = true;
+    notifyListeners();
     try {
       gptResponseData = await FinancialPlannerService.getRecommendation(
         salary: salaryController.value.text,
