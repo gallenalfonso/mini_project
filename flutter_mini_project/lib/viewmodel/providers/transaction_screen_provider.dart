@@ -19,7 +19,8 @@ class TransactionScreenProvider extends ChangeNotifier {
   String? validatorAmount(value) {
     if (value.isEmpty) {
       return 'Please Enter Amount';
-    }notifyListeners();
+    }
+    notifyListeners();
     return null;
   }
 
@@ -54,17 +55,16 @@ class TransactionScreenProvider extends ChangeNotifier {
   }
 
   void saveTransactionButton() {
-    if (formkey.currentState!.validate()) {
-      addTransaction(
-          double.parse(amountController.text),
-          descriptionController.text,
-          DateTime.parse(dateController.text),
-          isExpenseCategory);
+    addTransaction(
+        double.parse(amountController.text),
+        descriptionController.text,
+        DateTime.parse(dateController.text),
+        isExpenseCategory);
 
-      amountController.clear();
-      descriptionController.clear();
-      dateController.clear();
-    }
+    amountController.clear();
+    descriptionController.clear();
+    dateController.clear();
+
     notifyListeners();
   }
 }

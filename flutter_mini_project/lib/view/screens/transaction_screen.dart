@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/viewmodel/providers/homepage_provider.dart';
 import 'package:flutter_mini_project/viewmodel/providers/transaction_screen_provider.dart';
-import 'package:flutter_mini_project/view/screens/home_page.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -99,7 +99,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     decoration: const InputDecoration(
                       hintText: 'Input Description',
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                   ),
                 ),
               ],
@@ -146,10 +146,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 padding: const EdgeInsets.all(18.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    submitButton.saveTransactionButton();
-                    Navigator.pop(context);
-                    homeProvider.updateTotals();
-                    homeProvider.updateFilteredTransactions();
+                    if (submitButton.formkey.currentState!.validate()) {
+                      submitButton.saveTransactionButton();
+                      homeProvider.updateTotals();
+                      homeProvider.updateFilteredTransactions();
+                      Navigator.pop(context);
+                    }
                   },
                   child: const Text('SAVE'),
                 ),
