@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mini_project/models/boxes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 class ShowCharts extends StatefulWidget {
   const ShowCharts({super.key});
@@ -13,10 +14,9 @@ class ShowCharts extends StatefulWidget {
 class _ShowChartsState extends State<ShowCharts> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
-        title: Text('Overview'),
+        title: const Text('Overview'),
       ),
       body: ValueListenableBuilder(
         valueListenable: Boxes.getTransaction().listenable(),
@@ -44,7 +44,7 @@ class _ShowChartsState extends State<ShowCharts> {
 
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
-                child: Container(
+                child: SizedBox(
                   height: 200,
                   child: (PieChart(
                     // swapAnimationCurve: Curves.bounceIn,
@@ -73,7 +73,7 @@ class _ShowChartsState extends State<ShowCharts> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
 
@@ -86,10 +86,10 @@ class _ShowChartsState extends State<ShowCharts> {
                 width: 300,
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       'OVERALL',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
@@ -98,16 +98,18 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.all(30.0),
                       child: Row(
                         children: [
-                          Text(
+                          const Text(
                             'Rp.  ',
                             style: TextStyle(fontSize: 17),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 45,
                           ),
                           Text(
-                            '${totalAmount.toInt()}',
-                            style: TextStyle(fontSize: 26),
+                            NumberFormat.currency(
+                                    locale: 'id', symbol: ' ', decimalDigits: 0)
+                                .format(totalAmount.toInt()),
+                            style: const TextStyle(fontSize: 26),
                           )
                         ],
                       ),
@@ -116,7 +118,7 @@ class _ShowChartsState extends State<ShowCharts> {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
 
@@ -134,7 +136,7 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -154,8 +156,12 @@ class _ShowChartsState extends State<ShowCharts> {
                             ],
                           ),
                           Text(
-                            'Rp ${totalIncome.toInt()}',
-                            style: TextStyle(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: 'Rp ',
+                                    decimalDigits: 0)
+                                .format(totalIncome),
+                            style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -172,7 +178,7 @@ class _ShowChartsState extends State<ShowCharts> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -192,8 +198,12 @@ class _ShowChartsState extends State<ShowCharts> {
                             ],
                           ),
                           Text(
-                            'Rp ${totalExpense.toInt()}',
-                            style: TextStyle(
+                            NumberFormat.currency(
+                                    locale: 'id',
+                                    symbol: 'Rp ',
+                                    decimalDigits: 0)
+                                .format(totalExpense),
+                            style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
                         ],

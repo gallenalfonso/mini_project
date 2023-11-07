@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
-import 'package:flutter_mini_project/screens/transaction_screen.dart';
+import 'package:flutter_mini_project/viewmodel/providers/bottom_navigation_provider.dart';
+import 'package:flutter_mini_project/view/screens/transaction_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -26,14 +26,14 @@ class _BottomNavigationState extends State<MyBottomNavigation> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TransactionScreen(),
+            builder: (context) => const TransactionScreen(),
           ));
         },
-        child: Icon(Icons.add_sharp),
         shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.circular(30),
         ),
+        child: const Icon(Icons.add_sharp),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,

@@ -20,7 +20,7 @@ class NewsComponent extends StatelessWidget {
                   imageUrl: newsimage ?? ""),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 5,
           ),
           Expanded(

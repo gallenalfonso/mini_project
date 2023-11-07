@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mini_project/providers/bottom_navigation_provider.dart';
-import 'package:flutter_mini_project/providers/get_financial_planner_provider.dart';
-import 'package:flutter_mini_project/providers/homepage_provider.dart';
-import 'package:flutter_mini_project/providers/news_provider.dart';
-import 'package:flutter_mini_project/providers/transaction_screen_provider.dart';
-import 'package:flutter_mini_project/screens/bottom_navigation.dart';
-import 'package:flutter_mini_project/screens/home_page.dart';
+import 'package:flutter_mini_project/viewmodel/providers/bottom_navigation_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/get_financial_planner_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/homepage_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/news_provider.dart';
+import 'package:flutter_mini_project/viewmodel/providers/transaction_screen_provider.dart';
+import 'package:flutter_mini_project/view/screens/bottom_navigation.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(color: Colors.teal[300]),
           useMaterial3: true,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-          buttonTheme: ButtonThemeData(
+          buttonTheme: const ButtonThemeData(
             buttonColor: Colors.amber, // Warna tombol aktif
             disabledColor: Colors.grey, // Warna tombol saat dinonaktifkan
             // Atur properti lain sesuai kebutuhan Anda
